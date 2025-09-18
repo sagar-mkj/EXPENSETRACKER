@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <h1>💰 Expense Tracker</h1>
+    </header>
+
+    <!-- Add Expense Form -->
+    <form id="expenseForm" class="form-grid" autocomplete="off">
+        <div class="field">
+            <label for="title">Title</label>
+            <input id="title" type="text" placeholder="e.g., Lunch" required />
+        </div>
+
+        <div class="field">
+            <label for="amount">Amount (₹)</label>
+            <input id="amount" type="number" placeholder="e.g., 250" required />
+        </div>
+
+        <div class="field">
+            <label for="category">Category</label>
+            <input id="category" type="text" placeholder="Food / Travel / Shopping" required />
+        </div>
+
+        <div class="field">
+            <label for="date">Date</label>
+            <input id="date" type="date" required />
+        </div>
+
+        <div class="field action-field">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn primary add">+ Add Expense</button>
+        </div>
+    </form>
+
+    <!-- Controls row -->
+    <div class="controls-row">
+        <div class="controls-block">
+            <label for="filterCategory">Filter</label>
+            <select id="filterCategory">
+                <option value="all">All Categories</option>
+                <option value="Food">Food</option>
+                <option value="Travel">Travel</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="controls-block">
+            <label for="sortExpenses">Sort</label>
+            <select id="sortExpenses">
+                <option value="date-desc">Date (Newest)</option>
+                <option value="date-asc">Date (Oldest)</option>
+                <option value="amount-desc">Amount (High → Low)</option>
+                <option value="amount-asc">Amount (Low → High)</option>
+            </select>
+        </div>
+
+        <div class="controls-block limit-block">
+            <label for="limitInput">Monthly Limit (₹)</label>
+            <div class="limit-inline">
+                <input id="limitInput" type="number" placeholder="Enter limit" />
+                <button id="setLimitBtn" class="btn">Set</button>
+            </div>
+            <p id="currentLimit" class="current-limit"></p>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="expenseTable"></tbody>
+            <tfoot>
+            <tr>
+                <td colspan="6" id="totalExpenses">Total: ₹0</td>
+            </tr>
+            </tfoot>
+        </table>
+
+        <div id="limitMessage" class="limit-message" aria-live="polite"></div>
+    </div>
+</div>
+
+<!-- Update Modal (hidden until openModal is called) -->
+<div id="updateModal" class="modal" aria-hidden="true">
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+        <h2 id="modalTitle">✏️ Edit Expense</h2>
+
+        <form id="updateForm" class="update-form">
+            <input type="hidden" id="updateId" />
+
+            <label for="updateTitle">Title</label>
+            <input id="updateTitle" type="text" required />
+
+            <label for="updateAmount">Amount (₹)</label>
+            <input id="updateAmount" type="number" required />
+
+            <label for="updateCategory">Category</label>
+            <input id="updateCategory" type="text" required />
+
+            <label for="updateDate">Date</label>
+            <input id="updateDate" type="date" required />
+
+            <div class="modal-actions">
+                <button type="submit" class="btn primary">Update</button>
+                <button type="button" class="btn" id="cancelUpdate">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
